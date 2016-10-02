@@ -13,6 +13,7 @@ import CreateListinLayer from './components/CreateListinLayer';
 import FeedbackLayer from './components/FeedbackLayer';
 import Lists from './components/Lists';
 import { processStatus } from 'grommet/utils/Rest';
+import 'whatwg-fetch';
 
 // providerList should handle its data?
 // var providerData = [];
@@ -137,7 +138,7 @@ class Main extends Component {
 
         <Header size="large" justify="between" colorIndex="neutral-3-t" pad={{ "horizontal": "medium" }}>
           <Title pad={{ "horizontal": "medium" }}>
-            FreelanceList.in
+            FreelanceList.in (Beta)
           </Title>
           <SearchInput value={this.state.city} onSelect={this._citySelect.bind(this)} suggestions={this.state.cities} iconAlign="start" inline={true}  placeHolder="City" />
           <Box colorIndex="neutral-2">
