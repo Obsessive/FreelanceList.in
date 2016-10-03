@@ -56,7 +56,7 @@ export default class SeekerList extends Component {
     return (
       <List separator="right">
         {this.props.seekerData.map((Data, i) => {
-          if (this.props.city == Data.city || this.props.city == '') {
+          if (this.props.city == Data.city || this.props.city == 'Any') {
             return (<ListItem onClick={this._DetailViewOpen.bind(this, i)} key={i}>
               <span className="secondary">{Data.title}</span>
             </ListItem>);

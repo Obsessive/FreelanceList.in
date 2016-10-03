@@ -21,7 +21,7 @@ export default class FeedbackLayer extends Component {
       title:'',
       description:'',
       city:'',
-      cities:['Mumbai','Bangalore']
+      cities:['Mumbai','Bangalore','Other']
     };
   }
 

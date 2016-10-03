@@ -53,9 +53,9 @@ export default class ProviderList extends Component {
       activeLayer = null;
     }
     return (
-      <List separator="right">
+      <List separator="left">
         {this.props.providerData.map((Data, i) => {
-          if (this.props.city == Data.city || this.props.city == '') {
+          if (this.props.city == Data.city || this.props.city == 'Any') {
             return (<ListItem onClick={this._DetailViewOpen.bind(this, i)} key={i}>
               <span className="secondary">{Data.title}</span>
             </ListItem>);

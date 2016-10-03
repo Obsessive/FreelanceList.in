@@ -8,7 +8,7 @@ import SearchInput from 'grommet/components/SearchInput';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
 import Box from 'grommet/components/Box';
-// import Toast from 'grommet/components/Toast';
+import Toast from 'grommet/components/Toast';
 import CreateListinLayer from './components/CreateListinLayer';
 import FeedbackLayer from './components/FeedbackLayer';
 import Lists from './components/Lists';
@@ -27,17 +27,18 @@ class Main extends Component {
     this.state= {
       isFeedbackLayerActive:false,
       isCreateListinLayerActive: false,
+      isPendingApprovalToastActive: false,
       seekerData:[],
       providerData:[],
-      cities:['Mumbai','Bangalore'],
-      city:''
+      cities:['Mumbai','Bangalore','Any'],
+      city:'Any'
     };
     // this._getData();
   }
 
   componentDidMount () {
     const options = { method: 'GET' };
-    fetch(`http://data.freelancelist.in/seeking?{"$sort": {"timestamp": -1}}`, options,this)
+    fetch(`http://data.freelancelist.in/seeking?{"$sort": {"timestamp": -1},"approved":1}`, options,this)
     .then(processStatus)
     .then(response => response.json())
     .then(result =>{
@@ -46,7 +47,7 @@ class Main extends Component {
       this.setState({seekerData:result});
     })
     .catch(error => console.log(error));
-    fetch(`http://data.freelancelist.in/providing?{"$sort": {"timestamp": -1}}`, options)
+    fetch(`http://data.freelancelist.in/providing?{"$sort": {"timestamp": -1},"approved":1}`, options)
     .then(processStatus)
     .then(response => response.json())
     .then(result => {
@@ -62,7 +63,7 @@ class Main extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.setState({ isCreateListinLayerActive: false,isFeedbackLayerActive:false });
+    this.setState({ isCreateListinLayerActive: false,isFeedbackLayerActive:false,isPendingApprovalToastActive:false });
   }
 
   _openCreateListinLayer(type) {
@@ -87,7 +88,7 @@ class Main extends Component {
     .then(response => console.log(result))
     .then(result => console.log(result))
     .catch(error => this.setState({ result: undefined, error: error }));
-    this.setState({ isCreateListinLayerActive: false });
+    this.setState({ isCreateListinLayerActive: false, isPendingApprovalToastActive:true });
   }
 
   _createNewProviderListin(newdata) {
@@ -100,7 +101,7 @@ class Main extends Component {
     .then(response => response.json())
     .then(result => console.log(result))
     .catch(error => console.log(error));
-    this.setState({ isCreateListinLayerActive: false });
+    this.setState({ isCreateListinLayerActive: false, isPendingApprovalToastActive:true  });
   }
 
   _createNewFeedback(newdata) {
@@ -133,6 +134,10 @@ class Main extends Component {
     if (this.state.isFeedbackLayerActive) {
       FeedbackLayerHook = (<FeedbackLayer onSubmit={this._createNewFeedback.bind(this)} heading='Feedback' title='Tell us how to improve' onClose={this._onClose.bind(this)} />);
     }
+    var PendingApprovalToastHook = null;
+    if(this.state.isPendingApprovalToastActive) {
+      PendingApprovalToastHook = (<Toast status="ok" onClose={this._onClose.bind(this)}>Your listing will be approved and posted shortly. </Toast>);
+    }
     return (
       <App inline={false} centered={false}>
 
@@ -158,6 +163,7 @@ class Main extends Component {
         <Lists city={this.state.city} providerData={this.state.providerData} seekerData={this.state.seekerData}/>
         {CreateListin}
         {FeedbackLayerHook}
+        {PendingApprovalToastHook}
       </App>
     );
   }
