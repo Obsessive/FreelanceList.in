@@ -1,6 +1,8 @@
 # FreelanceList.in
 
-This project utilizes Grommet- The most advanced UX framework and ReactJs.
+This project utilizes 
+- Grommet, The most advanced UX framework
+- ReactJs, A Javascript library for building user interfaces
 
 To run this application, execute the following commands:
 

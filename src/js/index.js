@@ -14,7 +14,8 @@ import FeedbackLayer from './components/FeedbackLayer';
 import Lists from './components/Lists';
 import { processStatus } from 'grommet/utils/Rest';
 import 'whatwg-fetch';
-
+var ReactGA = require('react-ga');
+ReactGA.initialize('UA-60584820-6');
 // providerList should handle its data?
 // var providerData = [];
 
@@ -33,6 +34,8 @@ class Main extends Component {
       cities:['Mumbai','Bangalore','Any'],
       city:'Any'
     };
+    ReactGA.set({ page: "/" });
+    ReactGA.pageview("/");
     // this._getData();
   }
 
@@ -67,41 +70,61 @@ class Main extends Component {
   }
 
   _openCreateListinLayer(type) {
-    if(type=='seeker') {
-      this.setState({ isCreateListinLayerActive: true,type:'seeker',heading:'Find Someone',title:'Find someone to work with you on your project' });
-    }else{
-      this.setState({ isCreateListinLayerActive: true,type:'provider',heading:'Find Projects',title:'Find projects to work on/with' });
+    if (type == 'seeker') {
+      this.setState({ isCreateListinLayerActive: true, type: 'seeker', heading: 'Find Someone', title: 'Find someone to work with you on your project' });
+      ReactGA.event({
+        category: 'Layer',
+        action: 'Opened Seeker Create listing layer'
+      });
+    } else {
+      this.setState({ isCreateListinLayerActive: true, type: 'provider', heading: 'Find Projects', title: 'Find projects to work on/with' });
+      ReactGA.event({
+        category: 'Layer',
+        action: 'Opened Provider Create listing layer'
+      });
     }
   }
 
   _openFeedbackLayer() {
     this.setState({ isFeedbackLayerActive: true });
+    ReactGA.event({
+      category: 'Layer',
+      action: 'Opened Feedback layer'
+    });
   }
 
   _createNewSeekerListin(newdata) {
     this.state.seekerData.unshift(newdata);
-    var data= JSON.stringify( newdata ) ;
-    var headers={'Content-Type':'application/json'};
-    const options = { method: 'POST',headers,body: data };
-    fetch(`http://data.freelancelist.in/seeking`, options,this)
-    .then(processStatus)
-    .then(response => console.log(result))
-    .then(result => console.log(result))
-    .catch(error => this.setState({ result: undefined, error: error }));
-    this.setState({ isCreateListinLayerActive: false, isPendingApprovalToastActive:true });
+    var data = JSON.stringify(newdata);
+    var headers = { 'Content-Type': 'application/json' };
+    const options = { method: 'POST', headers, body: data };
+    fetch(`http://data.freelancelist.in/seeking`, options, this)
+      .then(processStatus)
+      .then(response => console.log(result))
+      .then(result => console.log(result))
+      .catch(error => this.setState({ result: undefined, error: error }));
+    this.setState({ isCreateListinLayerActive: false, isPendingApprovalToastActive: true });
+    ReactGA.event({
+      category: 'Listing',
+      action: 'Created new seeker listing '
+    });
   }
 
   _createNewProviderListin(newdata) {
     this.state.providerData.unshift(newdata);
-    var data= JSON.stringify( newdata ) ;
-    var headers={'Content-Type':'application/json'};
-    const options = { method: 'POST',headers,body: data };
-    fetch(`http://data.freelancelist.in/providing`, options,this)
-    .then(processStatus)
-    .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log(error));
-    this.setState({ isCreateListinLayerActive: false, isPendingApprovalToastActive:true  });
+    var data = JSON.stringify(newdata);
+    var headers = { 'Content-Type': 'application/json' };
+    const options = { method: 'POST', headers, body: data };
+    fetch(`http://data.freelancelist.in/providing`, options, this)
+      .then(processStatus)
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.log(error));
+    this.setState({ isCreateListinLayerActive: false, isPendingApprovalToastActive: true });
+    ReactGA.event({
+      category: 'Listing',
+      action: 'Created new provider listing '
+    });
   }
 
   _createNewFeedback(newdata) {
@@ -114,6 +137,10 @@ class Main extends Component {
     .then(result => console.log(result))
     .catch(error => console.log(error));
     this.setState({ isFeedbackLayerActive: false });
+    ReactGA.event({
+      category: 'Feedback',
+      action: 'Created new feedback '
+    });
   }
 
   _citySelect(data) {
