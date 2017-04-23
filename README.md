@@ -15,5 +15,5 @@ To run this application, execute the following commands:
   2. Start the development server:
 
     ```
-    $ gulp dev
+    $ npm start
     ```

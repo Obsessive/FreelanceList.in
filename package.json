@@ -1,10 +1,13 @@
 {
-  "name": "sample-gourmet",
-  "version": "0.1.0",
+  "name": "freelance-list",
+  "version": "0.2.0",
   "main": "src/js/index.js",
-  "description": "",
-  "repository": "",
+  "description": "A way to list a project and getting crowdsourced from developers around the world",
+  "repository": "https://github.com/Obsessive/FreelanceList.in",
   "license": "",
+  "scripts": {
+    "start": "gulp dev"
+  },
   "dependencies": {
     "grommet": "^0.6.9",
     "react": "^15.0.2",
