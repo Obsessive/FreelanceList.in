@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ProjectList from './components/ProjectList'
+import AppBar from 'material-ui/AppBar';
+
+// For Tap events on touch devices
+injectTapEventPlugin();
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+        <Router>
+          <MuiThemeProvider>
+            <div className="App">
+              <AppBar title="FreelancerList"/>
+              <div className="App-body">
+                <Route exact path="/" component={ProjectList}/>
+              </div>
+            </div>
+          </MuiThemeProvider>
+        </Router>  
     );
   }
 }
