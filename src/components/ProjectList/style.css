@@ -1,0 +1,23 @@
+.ProjectList-container{
+	flex: 1;
+}
+.ProjectList-item{
+	align-items: center;
+	display: flex;
+	flex: 1;
+	padding: 20px;
+	border-bottom: 1px gray solid;
+	flex-direction: row;
+}
+
+.ProjectList-item-name{
+	flex: 3;
+	font-size: 20px;
+}
+
+.ProjectList-item-details {
+	justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+}
