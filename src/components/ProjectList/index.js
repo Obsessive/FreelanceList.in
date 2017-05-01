@@ -1,6 +1,8 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import './style.css'
+import { Link } from 'react-router-dom'
+import './style.css';
+
 
 const projects = [
 	{
@@ -44,26 +46,31 @@ class ProjectList extends React.Component {
 		this.state = {
 			projects
 		}
+	}
+
+	handleItemClicked(projectId){
 
 	}
 
 
 	render() {
 		return(
-			<Paper className="ProjectList-container" >
+			<Paper className="ProjectList-container">
 				{this.state.projects.map(project => {
 					return(
-			      <div className="ProjectList-item" key={project.id}>
-			      	<span className="ProjectList-item-name">{project.name}</span>
-			      	<div className="ProjectList-item-details">
-			      		<div>
-			      			<span>{project.openJobs} jobs open</span>
-			      		</div>
-			      		<div >
-			      			<span>{project.hourCost} &#8377; / hour</span>
-			      		</div>
+						<Link to={`/projects/${project.id}`} key={project.id} style={{textDecoration: 'none' }}>
+				      <div className="ProjectList-item" >
+				      	<span className="ProjectList-item-name">{project.name}</span>
+				      	<div className="ProjectList-item-details">
+				      		<div>
+				      			<span>{project.openJobs} jobs open</span>
+				      		</div>
+				      		<div >
+				      			<span>{project.hourCost} &#8377; / hour</span>
+				      		</div>
+				      	</div>
 			      	</div>
-			      </div>
+		      	</Link>
 					)
 				})}
 			</Paper>
