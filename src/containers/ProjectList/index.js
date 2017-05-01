@@ -19,7 +19,7 @@ class ProjectList extends React.Component {
 				{Object.keys(this.props.projects.list).map(key => {
 					let project = this.props.projects.list[key]
 					return(
-						<Link to={`/projects/${project.id}`} key={key} style={{textDecoration: 'none' }}>
+						<Link to={`/projects/${key}`} key={key} style={{textDecoration: 'none' }}>
 				      <div className="ProjectList-item" >
 				      	<span className="ProjectList-item-name">{project.name}</span>
 				      	<div className="ProjectList-item-details">
